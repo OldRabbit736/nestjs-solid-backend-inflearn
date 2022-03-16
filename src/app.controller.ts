@@ -7,7 +7,6 @@ export class AppController {
 
   @Get()
   getHello() {
-    console.log('app controller');
     // return this.appService.getHello();
     return { message: 'wow' };
   }
