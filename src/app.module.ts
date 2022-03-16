@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { CatsModule } from './cats/cats.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       logger: 'debug',
       logging: process.env.MODE === 'dev' ? true : false,
     }),
+    CatsModule,
   ],
   controllers: [],
   providers: [],
