@@ -17,6 +17,8 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       database: process.env.DATABASE,
       entities: [],
       synchronize: true,
+      logger: 'debug',
+      logging: process.env.MODE === 'dev' ? true : false,
     }),
   ],
   controllers: [AppController],
