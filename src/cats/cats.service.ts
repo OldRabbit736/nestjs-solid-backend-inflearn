@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, Repository } from 'typeorm';
 import { Cat } from './cat.entity';
@@ -50,7 +46,7 @@ export class CatsService {
       return result;
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      throw new InternalServerErrorException();
+      throw error;
     } finally {
       await queryRunner.release();
     }
