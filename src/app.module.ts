@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { CatsModule } from './cats/cats.module';
+import { Cat } from './cats/cat.entity';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { CatsModule } from './cats/cats.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE,
-      entities: [],
+      entities: [Cat],
       synchronize: true,
       logger: 'debug',
       logging: process.env.MODE === 'dev' ? true : false,
