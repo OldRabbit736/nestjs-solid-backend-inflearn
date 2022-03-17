@@ -23,6 +23,7 @@ export class Cat {
 
   @Column({
     nullable: true,
+    name: 'img_url',
   })
   imgUrl: string;
 }
