@@ -19,7 +19,7 @@ export class CatsService {
 
     const queryRunner = getConnection().createQueryRunner();
 
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('REPEATABLE READ');
 
     const catRepository =
       queryRunner.manager.getCustomRepository(CatRepository);

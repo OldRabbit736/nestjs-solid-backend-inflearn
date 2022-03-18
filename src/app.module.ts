@@ -17,7 +17,6 @@ import { Cat } from './cats/cat.entity';
       database: process.env.DATABASE,
       entities: [Cat],
       synchronize: true,
-      logger: 'debug',
       logging: process.env.MODE === 'dev' ? true : false,
     }),
     CatsModule,
