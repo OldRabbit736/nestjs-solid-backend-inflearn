@@ -6,6 +6,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: true, // 프로덕션에서는 프론트엔드 도메인으로 설정해야 한다.
+    credentials: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('cat-community')
