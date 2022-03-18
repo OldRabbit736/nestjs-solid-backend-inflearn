@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, Repository } from 'typeorm';
 import { Cat } from './cat.entity';
-import { CatRepository } from './cat.repository';
+import { CatsRepository } from './cats.repository';
 import { CreateCatRequestDto } from './dto/create-cat-request.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateCatResponseDto } from './dto/create-cat-response.dto';
@@ -10,7 +10,7 @@ import { CreateCatResponseDto } from './dto/create-cat-response.dto';
 @Injectable()
 export class CatsService {
   constructor(
-    @InjectRepository(CatRepository)
+    @InjectRepository(CatsRepository)
     private readonly catRepository: Repository<Cat>,
   ) {}
 
@@ -22,7 +22,7 @@ export class CatsService {
     await queryRunner.startTransaction('REPEATABLE READ');
 
     const catRepository =
-      queryRunner.manager.getCustomRepository(CatRepository);
+      queryRunner.manager.getCustomRepository(CatsRepository);
 
     try {
       const found = await catRepository.findOne({
