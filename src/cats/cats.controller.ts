@@ -9,7 +9,8 @@ import {
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { CatsService } from './cats.service';
-import { CatRequestDto } from './dto/cats.request.dto';
+import { CreateCatRequestDto } from './dto/create-cat-request.dto';
+import { CreateCatResponseDto } from './dto/create-cat-response.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -23,7 +24,7 @@ export class CatsController {
   }
 
   @Post()
-  signUp(@Body() body: CatRequestDto) {
+  signUp(@Body() body: CreateCatRequestDto): Promise<CreateCatResponseDto> {
     return this.catsService.signUp(body);
   }
 

@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, Repository } from 'typeorm';
 import { Cat } from './cat.entity';
 import { CatRepository } from './cat.repository';
-import { CatRequestDto } from './dto/cats.request.dto';
+import { CreateCatRequestDto } from './dto/create-cat-request.dto';
 import * as bcrypt from 'bcrypt';
+import { CreateCatResponseDto } from './dto/create-cat-response.dto';
 
 @Injectable()
 export class CatsService {
@@ -13,7 +14,7 @@ export class CatsService {
     private readonly catRepository: Repository<Cat>,
   ) {}
 
-  async signUp(body: CatRequestDto) {
+  async signUp(body: CreateCatRequestDto): Promise<CreateCatResponseDto> {
     const { email, name, password } = body;
 
     const queryRunner = getConnection().createQueryRunner();
@@ -43,7 +44,7 @@ export class CatsService {
       const result = await catRepository.save(cat);
 
       await queryRunner.commitTransaction();
-      return result;
+      return CreateCatResponseDto.create(result);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;

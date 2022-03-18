@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CatRequestDto {
+export class CreateCatRequestDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
