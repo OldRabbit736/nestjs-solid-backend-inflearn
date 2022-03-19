@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { CatsModule } from './cats/cats.module';
 import { Cat } from './cats/cat.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Cat } from './cats/cat.entity';
       logging: process.env.MODE === 'dev' ? true : false,
     }),
     CatsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
