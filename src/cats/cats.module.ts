@@ -15,7 +15,7 @@ import { MulterModule } from '@nestjs/platform-express';
     forwardRef(() => AuthModule),
   ],
   controllers: [CatsController],
-  providers: [CatsService, CatsRepository],
-  exports: [TypeOrmModule],
+  providers: [CatsService], // do not include CatsRepository here!! It's already been provided by TypeOrmMudle.forFeature
+  exports: [TypeOrmModule], // for exporting CatsRepository
 })
 export class CatsModule {}
