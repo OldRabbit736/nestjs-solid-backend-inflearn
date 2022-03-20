@@ -17,6 +17,7 @@ import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 import { CurrentUser } from 'src/common/decorators/user.decorator';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
+import { multerOptions } from 'src/common/utils/multer.options';
 import { CatsService } from './cats.service';
 import { CreateCatRequestDto } from './dto/create.cat.request.dto';
 import { CreateCatResponseDto } from './dto/create.cat.response.dto';
@@ -66,10 +67,13 @@ export class CatsController {
   // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드' })
-  @UseInterceptors(FilesInterceptor('image'))
+  @UseInterceptors(FilesInterceptor('image', 10, multerOptions('cats')))
+  @UseGuards(JwtAuthGuard)
   @Post('upload')
-  uploadCatImg(@UploadedFiles() files: Array<Express.Multer.File>) {
-    console.log({ files });
-    return 'uploadImg';
+  uploadCatImg(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @CurrentUser() cat: CatValidatedDto,
+  ) {
+    return this.catsService.uploadImg(cat, files);
   }
 }

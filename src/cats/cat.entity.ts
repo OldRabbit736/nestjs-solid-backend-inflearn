@@ -24,6 +24,8 @@ export class Cat {
   @Column({
     nullable: true,
     name: 'img_url',
+    default:
+      'https://raw.githubusercontent.com/amamov/teaching-nestjs-a-to-z/main/images/1.jpeg',
   })
   imgUrl: string;
 }

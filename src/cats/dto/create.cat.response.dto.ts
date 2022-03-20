@@ -11,11 +11,12 @@ export class CreateCatResponseDto extends PickType(CatBaseDto, [
     public id: number,
     public email: string,
     public name: string,
+    public imgUrl: string,
   ) {
     super();
   }
 
   static create(cat: Cat) {
-    return new CreateCatResponseDto(cat.id, cat.email, cat.name);
+    return new CreateCatResponseDto(cat.id, cat.email, cat.name, cat.imgUrl);
   }
 }

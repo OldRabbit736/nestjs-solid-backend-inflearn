@@ -1,11 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as expressBasicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
+import * as path from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: true, // 프로덕션에서는 프론트엔드 도메인으로 설정해야 한다.
@@ -20,6 +22,10 @@ async function bootstrap() {
       },
     }),
   );
+  // http://localhost:3000/media/cats/aaa.png
+  app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
+    prefix: '/media',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('cat-community')

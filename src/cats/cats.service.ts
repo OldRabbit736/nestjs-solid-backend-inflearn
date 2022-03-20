@@ -4,6 +4,7 @@ import { CatsRepository } from './cats.repository';
 import { CreateCatRequestDto } from './dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateCatResponseDto } from './dto/create.cat.response.dto';
+import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
 
 @Injectable()
 export class CatsService {
@@ -46,5 +47,10 @@ export class CatsService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  uploadImg(cat: CatValidatedDto, files: Express.Multer.File[]) {
+    const fileName = `cats/${files[0].filename}`;
+    return this.catRepository.findByIdAndUpdateImg(cat.id, fileName);
   }
 }
