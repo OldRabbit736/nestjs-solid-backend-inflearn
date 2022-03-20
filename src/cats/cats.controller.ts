@@ -3,10 +3,12 @@ import {
   Controller,
   Get,
   Post,
+  UploadedFiles,
   UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
@@ -64,8 +66,10 @@ export class CatsController {
   // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드' })
+  @UseInterceptors(FilesInterceptor('image'))
   @Post('upload')
-  uploadCatImg() {
+  uploadCatImg(@UploadedFiles() files: Array<Express.Multer.File>) {
+    console.log({ files });
     return 'uploadImg';
   }
 }
