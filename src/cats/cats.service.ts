@@ -1,7 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { getConnection, Repository } from 'typeorm';
-import { Cat } from './cat.entity';
+import { getConnection } from 'typeorm';
 import { CatsRepository } from './cats.repository';
 import { CreateCatRequestDto } from './dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
@@ -9,10 +7,7 @@ import { CreateCatResponseDto } from './dto/create.cat.response.dto';
 
 @Injectable()
 export class CatsService {
-  constructor(
-    @InjectRepository(CatsRepository)
-    private readonly catRepository: Repository<Cat>,
-  ) {}
+  constructor(private readonly catRepository: CatsRepository) {}
 
   async signUp(body: CreateCatRequestDto): Promise<CreateCatResponseDto> {
     const { email, name, password } = body;
