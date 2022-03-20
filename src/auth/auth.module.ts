@@ -8,7 +8,7 @@ import { JwtStrategy } from './jwt/jwt.strategy';
 @Module({
   imports: [
     PassportModule.register({ session: false }), // session cookie 사용 여부?
-    // JwtModule.register({ secret: 'secret', signOptions: { expiresIn: '1y' } }),
+    JwtModule.register({ secret: 'secret', signOptions: { expiresIn: '1y' } }),
     CatsModule,
   ],
   providers: [AuthService, JwtStrategy],
