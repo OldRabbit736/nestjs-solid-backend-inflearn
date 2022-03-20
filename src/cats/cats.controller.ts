@@ -11,8 +11,10 @@ import {
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
+import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
 import { LoginRequestDto } from 'src/auth/dto/login.request.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { CurrentUser } from 'src/common/decorators/user.decorator';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { CatsService } from './cats.service';
@@ -31,8 +33,8 @@ export class CatsController {
   @ApiOperation({ summary: '현재 고양이 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@Req() req: Request) {
-    return req.user;
+  getCurrentCat(@CurrentUser() cat: CatValidatedDto) {
+    return cat;
   }
 
   @ApiResponse({
@@ -56,11 +58,12 @@ export class CatsController {
     return this.authService.jwtLogIn(data);
   }
 
-  @ApiOperation({ summary: '로그아웃' })
-  @Post('logout')
-  logOut() {
-    return 'logout';
-  }
+  // frontend에서 jwt만 없애면 로그아웃과 마찬가지이므로 이 end point는 backend에서는 필요 없다.
+  // @ApiOperation({ summary: '로그아웃' })
+  // @Post('logout')
+  // logOut() {
+  //   return 'logout';
+  // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드' })
   @Post('upload/cats')
