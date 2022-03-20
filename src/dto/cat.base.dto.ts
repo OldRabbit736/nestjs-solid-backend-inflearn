@@ -34,4 +34,10 @@ export class CatBaseDto {
     example: '12345',
   })
   id: number;
+
+  @ApiProperty({
+    description: '이미지 url',
+    example: 'https://img.url',
+  })
+  imgUrl: string;
 }
