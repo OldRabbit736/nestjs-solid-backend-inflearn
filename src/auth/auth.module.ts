@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { CatsModule } from 'src/cats/cats.module';
@@ -9,8 +9,9 @@ import { JwtStrategy } from './jwt/jwt.strategy';
   imports: [
     PassportModule.register({ session: false }), // session cookie 사용 여부?
     JwtModule.register({ secret: 'secret', signOptions: { expiresIn: '1y' } }),
-    CatsModule,
+    forwardRef(() => CatsModule),
   ],
   providers: [AuthService, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
