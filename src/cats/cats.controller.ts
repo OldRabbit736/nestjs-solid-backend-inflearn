@@ -3,13 +3,11 @@ import {
   Controller,
   Get,
   Post,
-  Req,
   UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
 import { LoginRequestDto } from 'src/auth/dto/login.request.dto';
@@ -66,7 +64,7 @@ export class CatsController {
   // }
 
   @ApiOperation({ summary: '고양이 이미지 업로드' })
-  @Post('upload/cats')
+  @Post('upload')
   uploadCatImg() {
     return 'uploadImg';
   }
