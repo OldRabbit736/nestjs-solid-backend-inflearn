@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as expressBasicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -10,6 +11,15 @@ async function bootstrap() {
     origin: true, // 프로덕션에서는 프론트엔드 도메인으로 설정해야 한다.
     credentials: true,
   });
+  app.use(
+    ['/docs', '/docs-json'],
+    expressBasicAuth({
+      challenge: true,
+      users: {
+        [process.env.SWAGGER_USER!]: process.env.SWAGGER_PASSWORD!,
+      },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('cat-community')
