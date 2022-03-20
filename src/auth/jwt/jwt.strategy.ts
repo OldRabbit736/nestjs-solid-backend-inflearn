@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const cat = await this.catsRepository.findOne(payload.sub);
 
     if (cat) {
-      return cat as CatValidatedDto; // request.user
+      return CatValidatedDto.create(cat); // request.user
     } else {
       throw new UnauthorizedException('접근 오류');
     }
