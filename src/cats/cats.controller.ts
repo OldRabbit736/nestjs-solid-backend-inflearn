@@ -10,8 +10,8 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { CatsService } from './cats.service';
-import { CreateCatRequestDto } from './dto/create-cat-request.dto';
-import { CreateCatResponseDto } from './dto/create-cat-response.dto';
+import { CreateCatRequestDto } from './dto/create.cat.request.dto';
+import { CreateCatResponseDto } from './dto/create.cat.response.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)

@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, Repository } from 'typeorm';
 import { Cat } from './cat.entity';
 import { CatsRepository } from './cats.repository';
-import { CreateCatRequestDto } from './dto/create-cat-request.dto';
+import { CreateCatRequestDto } from './dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
-import { CreateCatResponseDto } from './dto/create-cat-response.dto';
+import { CreateCatResponseDto } from './dto/create.cat.response.dto';
 
 @Injectable()
 export class CatsService {
