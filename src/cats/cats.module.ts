@@ -12,6 +12,6 @@ import { AuthModule } from 'src/auth/auth.module';
   ],
   controllers: [CatsController],
   providers: [CatsService, CatsRepository],
-  exports: [CatsRepository],
+  exports: [TypeOrmModule],
 })
 export class CatsModule {}

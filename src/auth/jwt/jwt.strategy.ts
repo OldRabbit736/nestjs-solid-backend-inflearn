@@ -20,7 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: Payload) {
-    console.log({ payload });
     const cat = await this.catsRepository.findOne(payload.sub);
 
     if (cat) {
