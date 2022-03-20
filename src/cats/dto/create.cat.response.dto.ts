@@ -7,11 +7,12 @@ export class CreateCatResponseDto extends PickType(CatBaseDto, [
   'email',
   'name',
 ] as const) {
-  private constructor(id: number, email: string, name: string) {
+  private constructor(
+    public id: number,
+    public email: string,
+    public name: string,
+  ) {
     super();
-    this.id = id;
-    this.email = email;
-    this.name = name;
   }
 
   static create(cat: Cat) {
