@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { getConnection } from 'typeorm';
-import { CatsRepository } from './cats.repository';
-import { CreateCatRequestDto } from './dto/create.cat.request.dto';
+import { CatsRepository } from '../repository/cats.repository';
+import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
-import { CreateCatResponseDto } from './dto/create.cat.response.dto';
+import { CreateCatResponseDto } from '../dto/create.cat.response.dto';
 import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
 
 @Injectable()

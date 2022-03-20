@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { CatsModule } from './cats/cats.module';
-import { Cat } from './cats/cat.entity';
+import { Cat } from './cats/entity/cat.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

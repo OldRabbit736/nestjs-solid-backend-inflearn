@@ -18,9 +18,9 @@ import { CurrentUser } from 'src/common/decorators/user.decorator';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { multerOptions } from 'src/common/utils/multer.options';
-import { CatsService } from './cats.service';
-import { CreateCatRequestDto } from './dto/create.cat.request.dto';
-import { CreateCatResponseDto } from './dto/create.cat.response.dto';
+import { CatsService } from '../service/cats.service';
+import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
+import { CreateCatResponseDto } from '../dto/create.cat.response.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
