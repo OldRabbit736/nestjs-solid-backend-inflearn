@@ -77,6 +77,7 @@ export class CatsController {
   }
 
   @ApiOperation({ summary: '모든 고양이 가져오기' })
+  @UseGuards(JwtAuthGuard)
   @Get('all')
   getAllCat() {
     return this.catsService.getAllCat();
