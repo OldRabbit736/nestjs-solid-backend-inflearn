@@ -6,6 +6,7 @@ import { CatsModule } from './cats/cats.module';
 import { Cat } from './cats/entity/cat.entity';
 import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entity/comment.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { CommentsModule } from './comments/comments.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE,
-      entities: [Cat],
+      entities: [Cat, Comment],
       synchronize: true,
       logging: process.env.MODE === 'dev' ? true : false,
     }),

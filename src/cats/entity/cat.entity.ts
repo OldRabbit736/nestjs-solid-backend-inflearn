@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Comment } from 'src/comments/entity/comment.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Cat {
@@ -28,4 +29,7 @@ export class Cat {
       'https://raw.githubusercontent.com/amamov/teaching-nestjs-a-to-z/main/images/1.jpeg',
   })
   imgUrl: string;
+
+  @OneToMany(() => Comment, (comment) => comment.target_cat, { eager: false })
+  comments: Comment[];
 }

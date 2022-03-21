@@ -5,4 +5,8 @@ export class CommentsService {
   getAllComments() {
     throw new Error('Method not implemented.');
   }
+
+  createComment(catid: string) {
+    throw new Error('Method not implemented.');
+  }
 }

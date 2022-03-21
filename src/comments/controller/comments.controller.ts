@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from '../service/comments.service';
 
@@ -11,5 +11,13 @@ export class CommentsController {
   @Get()
   getAllComments() {
     return this.commentsService.getAllComments();
+  }
+
+  @ApiOperation({
+    summary: '특정 고양이 프로필에 댓글 남기기',
+  })
+  @Post(':catid')
+  createComment(@Param('catid') catid: string) {
+    return this.commentsService.createComment(catid);
   }
 }
