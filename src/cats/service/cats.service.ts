@@ -55,6 +55,6 @@ export class CatsService {
 
   async getAllCat() {
     const allCat = await this.catRepository.find();
-    // const
+    return allCat.map(ReadonlyCatDto.create);
   }
 }
