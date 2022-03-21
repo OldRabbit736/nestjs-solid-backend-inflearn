@@ -11,7 +11,6 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/service/auth.service';
-import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
 import { LoginRequestDto } from 'src/auth/dto/login.request.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 import { CurrentUser } from 'src/common/decorators/user.decorator';
@@ -20,7 +19,7 @@ import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor'
 import { multerOptions } from 'src/common/utils/multer.options';
 import { CatsService } from '../service/cats.service';
 import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
-import { CreateCatResponseDto } from '../dto/create.cat.response.dto';
+import { ReadonlyCatDto } from 'src/dto/readonly.cat.dto';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
@@ -34,7 +33,7 @@ export class CatsController {
   @ApiOperation({ summary: '현재 고양이 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@CurrentUser() cat: CatValidatedDto) {
+  getCurrentCat(@CurrentUser() cat: ReadonlyCatDto) {
     return cat;
   }
 
@@ -45,11 +44,11 @@ export class CatsController {
   @ApiResponse({
     status: 201,
     description: '성공',
-    type: CreateCatResponseDto,
+    type: ReadonlyCatDto,
   })
   @ApiOperation({ summary: '회원가입' })
   @Post()
-  signUp(@Body() body: CreateCatRequestDto): Promise<CreateCatResponseDto> {
+  signUp(@Body() body: CreateCatRequestDto): Promise<ReadonlyCatDto> {
     return this.catsService.signUp(body);
   }
 
@@ -72,8 +71,14 @@ export class CatsController {
   @Post('upload')
   uploadCatImg(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @CurrentUser() cat: CatValidatedDto,
+    @CurrentUser() cat: ReadonlyCatDto,
   ) {
     return this.catsService.uploadImg(cat, files);
+  }
+
+  @ApiOperation({ summary: '모든 고양이 가져오기' })
+  @Get('all')
+  getAllCat() {
+    return this.catsService.getAllCat();
   }
 }

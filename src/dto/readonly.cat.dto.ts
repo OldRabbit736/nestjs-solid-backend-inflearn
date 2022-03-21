@@ -1,8 +1,8 @@
 import { PickType } from '@nestjs/swagger';
-import { Cat } from '../entity/cat.entity';
-import { CatBaseDto } from '../../dto/cat.base.dto';
+import { Cat } from '../cats/entity/cat.entity';
+import { CatBaseDto } from './cat.base.dto';
 
-export class CreateCatResponseDto extends PickType(CatBaseDto, [
+export class ReadonlyCatDto extends PickType(CatBaseDto, [
   'id',
   'email',
   'name',
@@ -17,6 +17,6 @@ export class CreateCatResponseDto extends PickType(CatBaseDto, [
   }
 
   static create(cat: Cat) {
-    return new CreateCatResponseDto(cat.id, cat.email, cat.name, cat.imgUrl);
+    return new ReadonlyCatDto(cat.id, cat.email, cat.name, cat.imgUrl);
   }
 }

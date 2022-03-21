@@ -3,14 +3,13 @@ import { getConnection } from 'typeorm';
 import { CatsRepository } from '../repository/cats.repository';
 import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
-import { CreateCatResponseDto } from '../dto/create.cat.response.dto';
-import { CatValidatedDto } from 'src/auth/dto/cat.validated.dto';
+import { ReadonlyCatDto } from 'src/dto/readonly.cat.dto';
 
 @Injectable()
 export class CatsService {
   constructor(private readonly catRepository: CatsRepository) {}
 
-  async signUp(body: CreateCatRequestDto): Promise<CreateCatResponseDto> {
+  async signUp(body: CreateCatRequestDto): Promise<ReadonlyCatDto> {
     const { email, name, password } = body;
 
     const queryRunner = getConnection().createQueryRunner();
@@ -40,7 +39,7 @@ export class CatsService {
       const result = await catRepository.save(cat);
 
       await queryRunner.commitTransaction();
-      return CreateCatResponseDto.create(result);
+      return ReadonlyCatDto.create(result);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -49,8 +48,13 @@ export class CatsService {
     }
   }
 
-  uploadImg(cat: CatValidatedDto, files: Express.Multer.File[]) {
+  uploadImg(cat: ReadonlyCatDto, files: Express.Multer.File[]) {
     const fileName = `cats/${files[0].filename}`;
     return this.catRepository.findByIdAndUpdateImg(cat.id, fileName);
+  }
+
+  async getAllCat() {
+    const allCat = await this.catRepository.find();
+    // const
   }
 }

@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { CatsRepository } from 'src/cats/repository/cats.repository';
-import { CatValidatedDto } from '../dto/cat.validated.dto';
+import { ReadonlyCatDto } from 'src/dto/readonly.cat.dto';
 import { Payload } from './jwt.payload';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const cat = await this.catsRepository.findOne(payload.sub);
 
     if (cat) {
-      return CatValidatedDto.create(cat); // request.user
+      return ReadonlyCatDto.create(cat); // request.user
     } else {
       throw new UnauthorizedException('접근 오류');
     }
