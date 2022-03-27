@@ -1,4 +1,9 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CatsRepository } from 'src/cats/repository/cats.repository';
 import { CreateCommentDto } from '../dto/create.comment.dto';
 import { CommentsRepository } from '../repository/comments.repository';
@@ -18,8 +23,30 @@ export class CommentsService {
     }
   }
 
-  createComment(catid: string, comment: CreateCommentDto) {
-    return 'hello';
+  // transaction으로 해야하나....???
+  async createComment(catid: number, commentData: CreateCommentDto) {
+    try {
+      const { writer_cat_id, content } = commentData;
+
+      const targetCat = await this.catsRepository.findOne({ id: catid });
+      const author = await this.catsRepository.findOne({
+        id: writer_cat_id,
+      });
+
+      if (!targetCat || !author) {
+        throw new BadRequestException('잘못된 요청입니다.');
+      }
+
+      const newComment = this.commentsRepository.create({
+        writer_cat: author,
+        target_cat: targetCat,
+        content,
+      });
+
+      return this.commentsRepository.save(newComment);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
+    }
   }
 
   plusLike(catid: string) {

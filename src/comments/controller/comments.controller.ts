@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateCommentDto } from '../dto/create.comment.dto';
 import { CommentsService } from '../service/comments.service';
@@ -18,7 +25,10 @@ export class CommentsController {
     summary: '특정 고양이 프로필에 댓글 남기기',
   })
   @Post(':catid')
-  createComment(@Param('catid') catid: string, @Body() body: CreateCommentDto) {
+  createComment(
+    @Param('catid', ParseIntPipe) catid: number,
+    @Body() body: CreateCommentDto, //TODO: 왜 AuthGuard를 이용해 요청자의 정보를 얻는 방법을 사용하지 않고 writer의 정보를 Dto로 받는 것으로 했을까...?
+  ) {
     return this.commentsService.createComment(catid, body);
   }
 
