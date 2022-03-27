@@ -6,6 +6,7 @@ export class ReadonlyCatDto extends PickType(CatBaseDto, [
   'id',
   'email',
   'name',
+  'imgUrl',
 ] as const) {
   private constructor(
     public id: number,
