@@ -17,7 +17,9 @@ export class CommentsService {
 
   getAllComments() {
     try {
-      return this.commentsRepository.find();
+      return this.commentsRepository.find({
+        relations: ['writer_cat', 'target_cat'],
+      }); //TODO: convert to ReadonlyDto
     } catch (error) {
       throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
     }
@@ -43,7 +45,7 @@ export class CommentsService {
         content,
       });
 
-      return this.commentsRepository.save(newComment);
+      return this.commentsRepository.save(newComment); //TODO: convert to ReadonlyDto
     } catch (error) {
       throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
     }

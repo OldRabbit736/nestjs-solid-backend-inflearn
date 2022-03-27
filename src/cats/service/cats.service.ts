@@ -50,7 +50,7 @@ export class CatsService {
 
   uploadImg(cat: ReadonlyCatDto, files: Express.Multer.File[]) {
     const fileName = `cats/${files[0].filename}`;
-    return this.catRepository.findByIdAndUpdateImg(cat.id, fileName);
+    return this.catRepository.findByIdAndUpdateImg(cat.id, fileName); // TODO: convert to ReadonlyCatDto
   }
 
   async getAllCat() {
