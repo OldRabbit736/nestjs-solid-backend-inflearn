@@ -18,7 +18,7 @@ export class CommentsService {
   getAllComments() {
     try {
       return this.commentsRepository.find({
-        relations: ['writer_cat', 'target_cat'],
+        relations: ['writer_cat', 'target_cat'], // https://seungtaek-overflow.tistory.com/9
       }); //TODO: convert to ReadonlyDto
     } catch (error) {
       throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
