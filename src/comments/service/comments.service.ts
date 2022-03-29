@@ -2,10 +2,10 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
 } from '@nestjs/common';
 import { CatsRepository } from 'src/cats/repository/cats.repository';
 import { CreateCommentDto } from '../dto/create.comment.dto';
+import { ReadonlyCommentDto } from '../dto/readonly.comment.dto';
 import { CommentsRepository } from '../repository/comments.repository';
 
 @Injectable()
@@ -15,11 +15,12 @@ export class CommentsService {
     private readonly catsRepository: CatsRepository,
   ) {}
 
-  getAllComments() {
+  async getAllComments() {
     try {
-      return this.commentsRepository.find({
+      const comments = await this.commentsRepository.find({
         relations: ['writer_cat', 'target_cat'], // https://seungtaek-overflow.tistory.com/9
-      }); //TODO: convert to ReadonlyDto
+      });
+      return comments.map(ReadonlyCommentDto.create);
     } catch (error) {
       throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
     }
@@ -45,7 +46,8 @@ export class CommentsService {
         content,
       });
 
-      return this.commentsRepository.save(newComment); //TODO: convert to ReadonlyDto
+      const comment = await this.commentsRepository.save(newComment);
+      return ReadonlyCommentDto.create(comment);
     } catch (error) {
       throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
     }
