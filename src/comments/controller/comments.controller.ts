@@ -6,8 +6,9 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateCommentDto } from '../dto/create.comment.dto';
+import { ReadonlyCommentDto } from '../dto/readonly.comment.dto';
 import { CommentsService } from '../service/comments.service';
 
 @ApiTags('comments')
@@ -15,12 +16,23 @@ import { CommentsService } from '../service/comments.service';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
+  @ApiResponse({
+    status: 200,
+    description: '성공',
+    type: ReadonlyCommentDto, // TODO: convert to Result<T>
+    isArray: true,
+  })
   @ApiOperation({ summary: '모든 고양이 프로필에 적힌 댓글 가져오기' })
   @Get()
   getAllComments() {
     return this.commentsService.getAllComments();
   }
 
+  @ApiResponse({
+    status: 201,
+    description: '성공',
+    type: ReadonlyCommentDto,
+  })
   @ApiOperation({
     summary: '특정 고양이 프로필에 댓글 남기기',
   })
