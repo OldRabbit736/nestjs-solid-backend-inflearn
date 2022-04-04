@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  HttpException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -49,11 +50,38 @@ export class CommentsService {
       const comment = await this.commentsRepository.save(newComment);
       return ReadonlyCommentDto.create(comment);
     } catch (error) {
-      throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
+      }
     }
   }
 
-  plusLike(catid: string) {
-    throw new Error('Method not implemented.');
+  // TODO: 이곳 작성하기!!!
+  async plusLike(commentId: number) {
+    try {
+      const comment = await this.commentsRepository.findOne(
+        {
+          id: commentId,
+        },
+        { relations: ['writer_cat', 'target_cat'] },
+      );
+
+      if (!comment) {
+        throw new BadRequestException('잘못된 요청입니다.');
+      }
+
+      comment.likeCount += 1;
+
+      const savedComment = await this.commentsRepository.save(comment);
+      return ReadonlyCommentDto.create(savedComment);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(error.message); // HttpExceptionFilter에 걸릴 수 있도록
+      }
+    }
   }
 }

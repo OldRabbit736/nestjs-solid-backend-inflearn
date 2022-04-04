@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -44,11 +45,16 @@ export class CommentsController {
     return this.commentsService.createComment(catid, body);
   }
 
+  @ApiResponse({
+    status: 201,
+    description: '성공',
+    type: ReadonlyCommentDto,
+  })
   @ApiOperation({
     summary: '좋아요 수 올리기',
   })
-  @Post(':catid/likes')
-  plusLike(@Param('catid') catid: string) {
-    return this.commentsService.plusLike(catid);
+  @Patch(':commentId/likes')
+  plusLike(@Param('commentId', ParseIntPipe) commentId: number) {
+    return this.commentsService.plusLike(commentId);
   }
 }
