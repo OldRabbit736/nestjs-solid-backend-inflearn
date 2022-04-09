@@ -28,11 +28,13 @@ export class CommentsService {
   }
 
   // transaction으로 해야하나....???
-  async createComment(catid: number, commentData: CreateCommentDto) {
+  async createComment(commentData: CreateCommentDto) {
     try {
-      const { writer_cat_id, content } = commentData;
+      const { target_cat_id, writer_cat_id, content } = commentData;
 
-      const targetCat = await this.catsRepository.findOne({ id: catid });
+      const targetCat = await this.catsRepository.findOne({
+        id: target_cat_id,
+      });
       const author = await this.catsRepository.findOne({
         id: writer_cat_id,
       });

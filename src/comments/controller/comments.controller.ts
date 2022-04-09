@@ -37,12 +37,11 @@ export class CommentsController {
   @ApiOperation({
     summary: '특정 고양이 프로필에 댓글 남기기',
   })
-  @Post(':catid')
+  @Post()
   createComment(
-    @Param('catid', ParseIntPipe) catid: number,
     @Body() body: CreateCommentDto, //TODO: 왜 AuthGuard를 이용해 요청자의 정보를 얻는 방법을 사용하지 않고 writer의 정보를 Dto로 받는 것으로 했을까...?
   ) {
-    return this.commentsService.createComment(catid, body);
+    return this.commentsService.createComment(body);
   }
 
   @ApiResponse({
