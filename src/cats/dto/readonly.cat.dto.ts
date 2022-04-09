@@ -1,5 +1,5 @@
 import { PickType } from '@nestjs/swagger';
-import { Cat } from '../cats/entity/cat.entity';
+import { Cat } from '../entity/cat.entity';
 import { CatBaseDto } from './cat.base.dto';
 
 export class ReadonlyCatDto extends PickType(CatBaseDto, [

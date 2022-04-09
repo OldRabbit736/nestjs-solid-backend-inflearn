@@ -3,7 +3,7 @@ import { getConnection } from 'typeorm';
 import { CatsRepository } from '../repository/cats.repository';
 import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
 import * as bcrypt from 'bcrypt';
-import { ReadonlyCatDto } from 'src/dto/readonly.cat.dto';
+import { ReadonlyCatDto } from 'src/cats/dto/readonly.cat.dto';
 
 @Injectable()
 export class CatsService {
@@ -54,7 +54,7 @@ export class CatsService {
   }
 
   async getAllCat() {
-    const allCat = await this.catRepository.find();
+    const allCat = await this.catRepository.find({ relations: ['comments'] });
     return allCat.map(ReadonlyCatDto.create);
   }
 }

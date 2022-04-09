@@ -19,7 +19,7 @@ import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor'
 import { multerOptions } from 'src/common/utils/multer.options';
 import { CatsService } from '../service/cats.service';
 import { CreateCatRequestDto } from '../dto/create.cat.request.dto';
-import { ReadonlyCatDto } from 'src/dto/readonly.cat.dto';
+import { ReadonlyCatDto } from 'src/cats/dto/readonly.cat.dto';
 
 @ApiTags('cats')
 @Controller('cats')

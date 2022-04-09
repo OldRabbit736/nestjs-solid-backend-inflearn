@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CatsRepository } from 'src/cats/repository/cats.repository';
 import { CreateCommentDto } from '../dto/create.comment.dto';
-import { ReadonlyCommentDto } from 'src/dto/readonly.comment.dto';
+import { ReadonlyCommentDto } from 'src/comments/dto/readonly.comment.dto';
 import { CommentsRepository } from '../repository/comments.repository';
 
 @Injectable()

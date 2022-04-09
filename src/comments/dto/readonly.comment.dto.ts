@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Comment } from 'src/comments/entity/comment.entity';
-import { ReadonlyCatDto } from './readonly.cat.dto';
+import { ReadonlyCatDto } from '../../cats/dto/readonly.cat.dto';
 
 export class ReadonlyCommentDto {
   @ApiProperty({

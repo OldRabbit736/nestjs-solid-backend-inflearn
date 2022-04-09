@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ReadonlyCommentDto } from 'src/dto/readonly.comment.dto';
+import { ReadonlyCommentDto } from 'src/comments/dto/readonly.comment.dto';
 import { CreateCommentDto } from '../dto/create.comment.dto';
 import { CommentsService } from '../service/comments.service';
 

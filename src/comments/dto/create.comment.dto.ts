@@ -1,5 +1,5 @@
 import { PickType } from '@nestjs/swagger';
-import { CommentBaseDto } from 'src/dto/comment.base.dto';
+import { CommentBaseDto } from 'src/comments/dto/comment.base.dto';
 
 export class CreateCommentDto extends PickType(CommentBaseDto, [
   'target_cat_id',
