@@ -1,8 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Comment } from 'src/comments/entity/comment.entity';
 import { ReadonlyCatDto } from '../../cats/dto/readonly.cat.dto';
+import { CommentBaseDto } from './comment.base.dto';
 
-export class ReadonlyCommentDto {
+export class ReadonlyCommentDto extends PickType(CommentBaseDto, [
+  'content',
+  'likeCount',
+] as const) {
   @ApiProperty({
     description: 'comment id',
   })
@@ -18,14 +22,8 @@ export class ReadonlyCommentDto {
   })
   target_cat: ReadonlyCatDto;
 
-  @ApiProperty({
-    description: '댓글 컨텐츠',
-  })
   content: string;
 
-  @ApiProperty({
-    description: '좋아요 수',
-  })
   likeCount: number;
 
   constructor(
@@ -35,6 +33,7 @@ export class ReadonlyCommentDto {
     content: string,
     likeCount: number,
   ) {
+    super();
     this.id = id;
     this.writer_cat = writer_cat;
     this.target_cat = target_cat;
