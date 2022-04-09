@@ -1,34 +1,26 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CommentBaseDto {
   @ApiProperty({
     description: '작성한 고양이 id',
-    required: true,
+    // required: true   // required 기본 값이 true
   })
-  @IsNumber()
-  @IsNotEmpty()
   writer_cat_id: number;
 
   @ApiProperty({
     description: '대상 고양이 id',
-    required: true,
   })
-  @IsNumber()
-  @IsNotEmpty()
   target_cat_id: number;
 
   @ApiProperty({
     description: '댓글 컨텐츠',
-    required: true,
+    example: '안녕~',
   })
-  @IsString()
-  @IsNotEmpty()
   content: string;
 
   @ApiProperty({
     description: '좋아요 수',
+    example: 3,
   })
-  @IsPositive()
   likeCount: number;
 }
